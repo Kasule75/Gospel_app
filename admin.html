@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Gospel Light Ministry</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .post-list {
+            margin-top: 40px;
+            border-top: 2px solid #eee;
+            padding-top: 20px;
+        }
+
+        .post-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        // Security Check
+        if (sessionStorage.getItem('adminAuthenticated') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Admin Dashboard</h1>
+                    <span class="tagline">Gospel Light Ministry</span>
+                </a>
+            </div>
+            <div>
+                <a href="index.html" class="cta-button"
+                    style="padding: 8px 20px; font-size: 0.8rem; margin-right: 10px;">View Site</a>
+                <button id="logoutBtn" class="cta-button"
+                    style="padding: 8px 20px; font-size: 0.8rem; background-color: #333;">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.href = 'login.html';
+        });
+    </script>
+
+    <div class="container">
+        <div class="admin-container">
+            <h2>📝 Write New Sermon/Blog</h2>
+            <form id="postForm">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="title" required placeholder="Enter sermon or Blog title...">
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="category">
+                        <option value="Daily Devotionals">Daily Devotionals</option>
+                        <option value="Christian Living">Christian Living</option>
+                        <option value="Testimonies">Testimonies</option>
+                        <option value="Sermons">Sermons</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" id="author" placeholder="e.g. Pastor John">
+                </div>
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="content" rows="20" required placeholder="Write your message here..."></textarea>
+                </div>
+
+                <button type="submit" class="cta-button">Publish Post</button>
+            </form>
+
+            <div class="post-list">
+                <h3>Manage Existing Posts</h3>
+                <div id="postsContainer">
+                    <!-- Posts will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Data Layer -->
+    <script src="js/data.js"></script>
+    <!-- Load Admin Logic -->
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
